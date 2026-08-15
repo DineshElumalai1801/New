@@ -7,5 +7,11 @@ pipeline {
                 sh 'mvn --version'
             }
         }
+         stage ('Maven Checks')
+        {
+            steps {
+                sh 'docker --version'
+            }
+        }
 }
 }
