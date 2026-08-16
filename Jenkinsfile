@@ -17,6 +17,49 @@ pipeline {
                 }
             }
         }
+        stage ('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
 
+        stage ('Quality Gate') {
+            steps {
+                timeout(time: 5, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
+        stage ('Docker image') {
+            timeout(time: 1, unit: 'HOURS') {
+
+
+
+            steps {
+
+                sh 'docker build -t dineshelumalai1801/myapp:latest .'
+            }
+        }
+        }
+
+        stage ('Trivy Scan') {
+            steps {
+                '''docker run --rm \
+                   -v /var/run/docker.sock:/var/run/docker.sock \
+                   -v "$PWD:/output" \
+                   aquasec/trivy:latest \
+                   image -f json -o /output/result.json myapp:latest
+                '''
+            }
+
+            post {
+                always {
+                    archiveArtifacts artifacts: 'result.json', fingerprint: true
+                }
+            }
+        }   
 }
 }
