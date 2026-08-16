@@ -13,7 +13,7 @@ pipeline {
             }
             post {
                 always {
-                    archiveArtifacts artifacts: 'target/jb-hello-world-maven.jar.jar', fingerprint: true
+                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
                 }
             }
         }
