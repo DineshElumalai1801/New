@@ -42,7 +42,8 @@ pipeline {
 
         stage ('Trivy Scan') {
             steps {
-                '''docker run --rm \
+                '''
+                   docker run --rm \
                    -v /var/run/docker.sock:/var/run/docker.sock \
                    -v "$PWD:/output" \
                    aquasec/trivy:latest \
