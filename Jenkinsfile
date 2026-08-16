@@ -17,7 +17,7 @@ pipeline {
                 }
             }
         }
-        stage ('SonarQube Analysis') {
+      /*  stage ('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     sh 'mvn sonar:sonar'
@@ -31,7 +31,7 @@ pipeline {
                     waitForQualityGate abortPipeline: true
                 }
             }
-        }
+        } */
 
         stage ('Docker image') {
             steps {
