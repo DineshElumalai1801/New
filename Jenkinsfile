@@ -42,13 +42,13 @@ pipeline {
 
         stage ('Trivy Scan') {
             steps {
-                '''
-                   docker run --rm \
-                   -v /var/run/docker.sock:/var/run/docker.sock \
-                   -v "$PWD:/output" \
-                   aquasec/trivy:latest \
-                   image -f json -o /output/result.json myapp:latest
-                '''
+                 sh '''
+                    docker run --rm \
+                    -v /var/run/docker.sock:/var/run/docker.sock \
+                    -v "$PWD:/output" \
+                    aquasec/trivy:latest \
+                    image -f json -o /output/result.json myapp:latest
+                   '''
             }
 
             post {
