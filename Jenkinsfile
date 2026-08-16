@@ -13,7 +13,7 @@ pipeline {
             }
             post {
                 always {
-                    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                    archiveArtifacts artifacts: 'jb-hello-world-maven.jar', fingerprint: true
                 }
             }
         }
@@ -34,15 +34,10 @@ pipeline {
         }
 
         stage ('Docker image') {
-            timeout(time: 1, unit: 'HOURS') {
-
-
-
             steps {
 
                 sh 'docker build -t dineshelumalai1801/myapp:latest .'
             }
-        }
         }
 
         stage ('Trivy Scan') {
